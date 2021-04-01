@@ -1,0 +1,4 @@
+flask
+mongoengine
+redis
+ffmpeg-python
