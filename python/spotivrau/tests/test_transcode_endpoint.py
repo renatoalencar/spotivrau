@@ -29,8 +29,14 @@ def test_transcode(client):
     song = Song.objects.get(id=id)
 
     assert response.status_code == 200
+
+    # Should have persisted the raw file
     assert os.path.exists(song_path)
 
+    # Should have enqueued a transcode message
+    assert client.application.queue._pop_has('transcode', {'id': id})
+
+    # Should have persisted the song in the database
     assert song is not None
     assert song.original_song_path == song_path
     assert song.name == 'Lost European'
