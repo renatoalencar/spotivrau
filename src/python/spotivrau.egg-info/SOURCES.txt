@@ -4,11 +4,9 @@ spotivrau/app.py
 spotivrau/commands.py
 spotivrau/jobs.py
 spotivrau/models.py
-spotivrau/queue.py
-spotivrau/service.py
-spotivrau/storage.py
+spotivrau/services.py
 spotivrau/transcoder.py
-spotivrau/worker.py
+spotivrau/views.py
 spotivrau.egg-info/PKG-INFO
 spotivrau.egg-info/SOURCES.txt
 spotivrau.egg-info/dependency_links.txt

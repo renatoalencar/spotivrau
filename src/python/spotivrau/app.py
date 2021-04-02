@@ -16,7 +16,7 @@ def setup_app():
 
     import spotivrau.commands
 
-    app.config['UPLOAD_FOLDER'] = '/tmp'
+    app.config['UPLOAD_FOLDER'] = '/home/gama/workspace/spotivrau/admin/public/media'
     app.config['MONGO_CONNECTION_URI'] = 'mongodb://root:spotivrau@localhost/spotivrau?authSource=admin'
     app.config['REDIS_CONNECTION_URI'] = 'redis://localhost/0'
 

@@ -1,43 +1,62 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
+
+function Song({ song }) {
+  return (
+    <div>
+      <p><b>{song.name}</b></p>
+      <p><img src={`/media/${song.waveform}`} /></p>
+      <p><audio controls src={`/media/${song.song}`} /></p>
+    </div>
+  )
+}
+
 
 function App() {
   const [progress, setProgress] = useState(0)
+  const [songId, setSongId] = useState(null)
+  const [song, setSong] = useState(null)
 
-  async function handleSubmit(e) {
-    const eventSource = new EventSource('http://localhost:8080/status')
-    eventSource.onmessage = (e) => {
-      const data = JSON.parse(e.data)
-
-      console.log(data)
-
-      if(data.type === 'progress') {
-        setProgress(data.progress)
-      }
+  useEffect(() => {
+    if (!songId) {
+      return
     }
 
-    const data = new FormData(e.target)
+    const interval = setTimeout(() => {
+      axios.get('http://localhost:5000/songs/' + songId)
+        .then(response => {
+          setSong(response.data)
+        })
+    }, 5000)
+  }, [songId])
 
-    await axios.post(
-      'http://localhost:8080/transcode',
-      data,
-      {
-        onUploadProgress(event) {
-          setProgress(event.loaded / event.total)
-        }
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    axios.post('http://localhost:5000/transcode', new FormData(e.target), {
+      onUploadProgress(uploadEvent) {
+        setProgress(Math.floor(uploadEvent.loaded * 100 / uploadEvent.total))
       }
-    )
+    }).then(response => {
+      setSongId(response.data.id)
+    })
+
+    return false
   }
 
   return (
-    <form encType="multipart/form-data" onSubmit={(e) => {
-      e.preventDefault()
-      handleSubmit(e)
-      return false
-    }}>
+    <form encType="multipart/form-data" onSubmit={handleSubmit}>
+      <i>{songId}</i> {' '}
       <i>{progress}</i>
 
-      <input type="file" name="file" />
+      {song && <Song song={song} />}
+
+      <p>
+        <input type="text" name="name" />
+      </p>
+      <p>
+        <input type="file" name="file" />
+      </p>
 
       <button type="submit">Send</button>
     </form>
