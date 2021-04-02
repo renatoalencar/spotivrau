@@ -2,7 +2,7 @@ import os
 import json
 import io
 
-from spotivrau import Song
+from spotivrau.models import Song
 
 dirname = os.path.dirname(os.path.realpath(__file__))
 
