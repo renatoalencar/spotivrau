@@ -9,6 +9,8 @@ class Worker:
         def decorator(fn):
             self.create_job(name, fn)
 
+            return fn
+
         return decorator
 
     def create_job(self, name, fn):
