@@ -3,6 +3,7 @@ from .lib.storage import FileStorage
 from .app import queue, worker
 from .models import Song
 from .transcoder import Transcoder
+from .services import TranscodeService
 
 
 @worker.job('transcode')
@@ -14,14 +15,4 @@ def transcode(data):
     storage = FileStorage(queue.app)
     transcoder = Transcoder(open(song.original_song_path, 'rb'))
 
-    song.song_path = storage.store(
-        transcoder.transcode('ogg'),
-        song.id + '.ogg'
-    )
-    song.waveform_path = storage.store(
-        transcoder.waveform(),
-        song.id + '.waveform.png'
-    )
-    song.metadata = transcoder.metadata()
-
-    song.save()
+    TranscodeService(song, storage, transcoder).transcode()

@@ -4,13 +4,13 @@ from .lib.service import service_error_serialize
 
 from .app import app, queue
 from .models import Song
-from .services import TranscodeService
+from .services import EnqueueTranscodeService
 
 
 @app.route('/transcode', methods=['POST'])
 @service_error_serialize
 def index():
-    service = TranscodeService(FileStorage(app), Song, queue)
+    service = EnqueueTranscodeService(FileStorage(app), Song, queue)
     song = service.transcode(request.form['name'], request.files['file'])
 
     return { 'id': song.id }
