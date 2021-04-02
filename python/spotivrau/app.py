@@ -1,10 +1,14 @@
 from flask import Flask
-from .queue import Queue
+from .lib.queue import Queue
+from .lib.worker import Worker
 
 app = Flask(__name__)
 queue = Queue(app)
+worker = Worker(queue)
 
 import spotivrau.views
+import spotivrau.jobs
+
 
 def setup_app():
     import mongoengine

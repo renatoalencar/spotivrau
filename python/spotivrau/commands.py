@@ -1,8 +1,8 @@
 import click
 import mongoengine as db
 
-from spotivrau.app import app, setup_app
-from spotivrau.jobs import worker
+from .app import app, worker, setup_app
+
 
 @app.cli.command()
 def work():

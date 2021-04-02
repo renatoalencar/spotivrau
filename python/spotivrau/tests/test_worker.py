@@ -1,4 +1,4 @@
-from spotivrau.worker import Worker
+from spotivrau.lib.worker import Worker
 
 
 def test_process_queue(queue):

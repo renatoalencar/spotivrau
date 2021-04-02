@@ -1,6 +1,6 @@
 import uuid
 
-from .service import ServiceError
+from .lib.service import ServiceError
 
 
 class TranscodeService:

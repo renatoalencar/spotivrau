@@ -1,11 +1,9 @@
-from spotivrau import queue
+from .lib.storage import FileStorage
+
+from .app import queue, worker
 from .models import Song
-from .worker import Worker
-
 from .transcoder import Transcoder
-from .storage import FileStorage
 
-worker = Worker(queue)
 
 @worker.job('transcode')
 def transcode(data):
