@@ -3,7 +3,7 @@ import io
 import magic
 
 from spotivrau.jobs import transcode
-from spotivrau.models import Song
+from spotivrau.models import Song, SongStatus
 
 
 dirname = os.path.dirname(os.path.realpath(__file__))
@@ -23,3 +23,4 @@ def test_transcode(current_app):
     assert magic.from_file(song.song_path, mime=True) == 'audio/ogg'
     assert magic.from_file(song.waveform_path, mime=True) == 'image/png'
     assert song.metadata['format']['duration'] == '249.026667'
+    assert song.status == SongStatus.DONE

@@ -2,6 +2,8 @@ import uuid
 
 from .lib.service import ServiceError
 
+from .models import SongStatus
+
 
 class EnqueueTranscodeService:
     def __init__(self, storage, song_class, queue):
@@ -25,6 +27,9 @@ class EnqueueTranscodeService:
 
         self.queue.enqueue('transcode', {'id': id})
 
+        song.status = SongStatus.QUEDED
+        song.save()
+
         return song
 
 
@@ -40,12 +45,13 @@ class TranscodeService:
     def transcode(self):
         self.song.song_path = self.storage.store(
             self.transcoder.transcode(self.format),
-            self.song.id + '.' + self.format
+            str(self.song.id) + '.' + self.format
         )
         self.song.waveform_path = self.storage.store(
             self.transcoder.waveform(),
-            self.song.id + '.waveform.' + self.waveform_format
+            str(self.song.id) + '.waveform.' + self.waveform_format
         )
         self.song.metadata = self.transcoder.metadata()
+        self.song.status = SongStatus.DONE
 
         self.song.save()

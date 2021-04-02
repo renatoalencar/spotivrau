@@ -13,4 +13,4 @@ def index():
     service = EnqueueTranscodeService(FileStorage(app), Song, queue)
     song = service.transcode(request.form['name'], request.files['file'])
 
-    return { 'id': song.id }
+    return { 'id': str(song.id) }

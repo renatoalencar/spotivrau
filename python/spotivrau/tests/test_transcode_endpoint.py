@@ -2,7 +2,7 @@ import os
 import json
 import io
 
-from spotivrau.models import Song
+from spotivrau.models import Song, SongStatus
 
 dirname = os.path.dirname(os.path.realpath(__file__))
 
@@ -40,6 +40,7 @@ def test_transcode(client):
     assert song is not None
     assert song.original_song_path == song_path
     assert song.name == 'Lost European'
+    assert song.status == SongStatus.QUEDED
 
 
 def test_invalid_file(client):
