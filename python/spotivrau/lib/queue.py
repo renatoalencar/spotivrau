@@ -18,7 +18,7 @@ class Queue:
         self.app = app
         app.queue = self
 
-    def enqueue(self, name, data):
+    def enqueue(self, name, **data):
         self.connection.rpush(name, self.serializer.serialize(data))
 
     def unqueue(self, name):

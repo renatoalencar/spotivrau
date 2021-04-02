@@ -25,7 +25,7 @@ class Worker:
         print(f'Received mesage on queue {name}')
 
         for fn in self.jobs[name]:
-            fn(data)
+            fn(**data)
 
     def work_loop(self):
         for queue in self.jobs.keys():

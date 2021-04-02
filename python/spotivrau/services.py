@@ -25,7 +25,7 @@ class EnqueueTranscodeService:
             original_song_path=original_song_path
         ).save()
 
-        self.queue.enqueue('transcode', {'id': id})
+        self.queue.enqueue('transcode', id=id)
 
         song.status = SongStatus.QUEDED
         song.save()

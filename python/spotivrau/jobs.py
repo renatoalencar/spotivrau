@@ -7,8 +7,8 @@ from .services import TranscodeService
 
 
 @worker.job('transcode')
-def transcode(data):
-    song = Song.objects.get(id=data['id'])
+def transcode(id):
+    song = Song.objects.get(id=id)
 
     print(f'Processing song - {song.name}')
 

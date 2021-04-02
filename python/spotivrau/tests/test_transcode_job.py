@@ -16,7 +16,7 @@ def test_transcode(current_app):
         original_song_path=os.path.join(dirname, 'fixtures/Images - Lost European.wav')
     ).save()
 
-    transcode({ 'id': song.id })
+    transcode(id=song.id)
 
     song = Song.objects.get(id=song.id)
 
