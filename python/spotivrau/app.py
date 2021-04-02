@@ -22,7 +22,7 @@ class TranscodeService:
         if not self.storage.valid_type(file):
             raise ServiceError('Invalid file')
 
-        original_song_path = self.storage.store(id, file)
+        original_song_path = self.storage.upload(id, file)
 
         song = self.song_class(
             id=id,
