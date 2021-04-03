@@ -5,7 +5,7 @@ from .lib.storage import FileStorage
 from .lib.service import service_error_serialize
 
 from .app import app, queue
-from .models import Song
+from .models import Song, SongStatus
 from .services import EnqueueTranscodeService
 
 
@@ -22,10 +22,15 @@ def index():
 def song(song_id):
     song = Song.objects.get(id=song_id)
 
-    return {
+    serialized_song = {
         'id': song.id,
         'name': song.name,
         'original_song': os.path.basename(song.original_song_path),
-        'song': os.path.basename(song.song_path),
-        'waveform': os.path.basename(song.waveform_path)
+        'status': song.status.value
     }
+
+    if song.status == SongStatus.DONE:
+        serialized_song['song'] = os.path.basename(song.song_path)
+        serialized_song['waveform'] = os.path.basename(song.waveform_path)
+
+    return serialized_song

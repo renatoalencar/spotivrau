@@ -6,6 +6,7 @@ import mongoengine as db
 class SongStatus(enum.Enum):
     IDLE = 'idle'
     QUEDED = 'queued'
+    PROCESSING = 'processing'
     DONE = 'done'
     ERROR = 'error'
 

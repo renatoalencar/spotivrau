@@ -43,6 +43,9 @@ class TranscodeService:
         self.transcoder = transcoder
 
     def transcode(self):
+        self.song.status = SongStatus.PROCESSING
+        self.song.save()
+
         self.song.song_path = self.storage.store(
             self.transcoder.transcode(self.format),
             str(self.song.id) + '.' + self.format

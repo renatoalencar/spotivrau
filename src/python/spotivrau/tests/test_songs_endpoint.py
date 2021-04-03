@@ -9,6 +9,7 @@ def test_transcode(client):
         original_song_path='/tmp/6e499cbb-dc2d-4423-b2e7-1ff568409add.wav',
         song_path='/tmp/6e499cbb-dc2d-4423-b2e7-1ff568409add.ogg',
         waveform_path='/tmp/6e499cbb-dc2d-4423-b2e7-1ff568409add.waveform.png',
+        status=SongStatus.DONE
     ).save()
 
     response = client.get('/songs/6e499cbb-dc2d-4423-b2e7-1ff568409add')
@@ -20,3 +21,4 @@ def test_transcode(client):
     assert data['original_song'] == '6e499cbb-dc2d-4423-b2e7-1ff568409add.wav'
     assert data['song'] == '6e499cbb-dc2d-4423-b2e7-1ff568409add.ogg'
     assert data['waveform'] == '6e499cbb-dc2d-4423-b2e7-1ff568409add.waveform.png'
+    assert data['status'] == 'done'

@@ -1,38 +1,96 @@
-.App {
-  text-align: center;
+.app {
+  max-width: 650px;
+  margin: 2.5em auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.input {
+  margin: 1.5em 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.input__label {
+  font-weight: 600;
+  margin-bottom: 1em;
+  display: block;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.input__input {
+  background: var(--background-light);
+  border-radius: 4px;
+  border: 1px solid var(--background-lighter);
+  padding: 0.9em;
+  color: var(--foreground-color);
+  width: 100%;
+  font-size: 1em;
+}
+
+.progress-primary {
+  background: var(--background-light);
+  border: none;
+  width: 100%;
+  border-radius: 1em;
+}
+
+.progress-primary::-moz-progress-bar, .progress-primary::-webkit-progress-bar {
+  background: var(--primary-color);
+    border-radius: 1em;
+}
+
+.song_report__status {
+  opacity: 0.8;
+  text-transform: capitalize;
+}
+
+.song-report {
+  transition: opacity ease 2s;
+}
+
+.song-report--done {
+  opacity: 0;
+}
+
+.player {
+  width: 100%;
+}
+
+.player__waveform {
+  width: 100%;
+  opacity: 0.6;
+}
+
+.player__button {
+  background: var(--foreground-color);
+  color: var(--background-color);
+  border: none;
+  height: 2.8em;
+  width: 2.8em;
+  border-radius: 1.4em;
+
+  transition: all ease 0.2s;
+}
+
+.player__button:hover {
+  transform: scaleX(1.05) scaleY(1.05);
+}
+
+.player__button--outline {
+  background:  var(--background-color);;
+  color: var(--foreground-color);
+}
+
+.player__controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.player__controls *:first-child {
+  margin-right: 1em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.player__song-title {
+  margin: 0.5em 0;
+}
+
+.player__column {
+  width: 100%;
 }
