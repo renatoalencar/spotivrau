@@ -4,7 +4,7 @@ from mongoengine import connect, disconnect
 from spotivrau import app
 
 app.config['UPLOAD_FOLDER'] = '/tmp'
-app.config['MONGO_CONNECTION_URI'] = 'mongodb://root:spotivrau@localhost/spotivrau?authSource=admin'
+app.config['MONGO_CONNECTION_URI'] = 'mongodb://root:spotivrau@localhost/spotivrau_test?authSource=admin'
 app.config['REDIS_CONNECTION_URI'] = 'redis://localhost/1'
 
 @pytest.fixture

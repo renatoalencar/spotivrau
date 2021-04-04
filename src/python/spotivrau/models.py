@@ -19,6 +19,9 @@ class Song(db.Document):
     waveform_path = db.StringField()
     original_song_path = db.StringField()
 
+    cover_path = db.StringField()
+    cover_thumb_path = db.StringField()
+
     metadata = db.DynamicField()
 
     status = db.EnumField(SongStatus, default=SongStatus.IDLE)

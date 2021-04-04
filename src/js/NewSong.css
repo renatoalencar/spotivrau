@@ -1,0 +1,45 @@
+.input {
+  margin: 1.5em 0;
+}
+
+.input__label {
+  font-weight: 600;
+  margin-bottom: 1em;
+  display: block;
+}
+
+.input__input {
+  background: var(--background-light);
+  border-radius: 4px;
+  border: 1px solid var(--background-lighter);
+  padding: 0.9em;
+  color: var(--foreground-color);
+  width: 100%;
+  font-size: 1em;
+  outline: none;
+}
+
+.progress-primary {
+  background: var(--background-light);
+  border: none;
+  width: 100%;
+  border-radius: 1em;
+}
+
+.progress-primary::-moz-progress-bar, .progress-primary::-webkit-progress-bar {
+  background: var(--primary-color);
+    border-radius: 1em;
+}
+
+.song_report__status {
+  opacity: 0.8;
+  text-transform: capitalize;
+}
+
+.song-report {
+  transition: opacity ease 2s;
+}
+
+.song-report--done {
+  opacity: 0;
+}
