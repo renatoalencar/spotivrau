@@ -14,6 +14,7 @@ class SongStatus(enum.Enum):
 class Song(db.Document):
     id = db.UUIDField(primary_key=True)
     name = db.StringField()
+    artist = db.StringField()
 
     song_path = db.StringField()
     waveform_path = db.StringField()

@@ -6,6 +6,7 @@ def test_single_song(client):
     song = Song(
         id='6e499cbb-dc2d-4423-b2e7-1ff568409add',
         name='C\'est Cuit',
+        artist='Major Lazer',
         original_song_path='/tmp/6e499cbb-dc2d-4423-b2e7-1ff568409add.wav',
         song_path='/tmp/6e499cbb-dc2d-4423-b2e7-1ff568409add.ogg',
         waveform_path='/tmp/6e499cbb-dc2d-4423-b2e7-1ff568409add.waveform.png',
@@ -32,6 +33,7 @@ def test_single_song(client):
 
     assert data['id'] == '6e499cbb-dc2d-4423-b2e7-1ff568409add'
     assert data['name'] == 'C\'est Cuit'
+    assert data['artist'] == 'Major Lazer'
     assert data['original_song'] == '6e499cbb-dc2d-4423-b2e7-1ff568409add.wav'
     assert data['song'] == '6e499cbb-dc2d-4423-b2e7-1ff568409add.ogg'
     assert data['waveform'] == '6e499cbb-dc2d-4423-b2e7-1ff568409add.waveform.png'

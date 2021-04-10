@@ -12,7 +12,7 @@ class EnqueueTranscodeService:
         self.queue = queue
         self.thumb = thumb
 
-    def transcode(self, name, file, cover):
+    def transcode(self, name, artist, file, cover):
         id = str(uuid.uuid4())
 
         if not self.storage.valid_type(file):
@@ -25,6 +25,7 @@ class EnqueueTranscodeService:
         song = self.song_class(
             id=id,
             name=name,
+            artist=artist,
             original_song_path=original_song_path,
             cover_path=cover_path,
             cover_thumb_path=cover_thumb_path,

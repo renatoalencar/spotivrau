@@ -1,5 +1,5 @@
 .input {
-  margin: 1.5em 0;
+  margin-bottom: 1.5em;
 }
 
 .input__label {
@@ -17,6 +17,35 @@
   width: 100%;
   font-size: 1em;
   outline: none;
+}
+
+.upload-form__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.upload-form__row > * {
+  margin: 0 0.4em;
+}
+
+.upload-form__column {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-form__cover .input__label {
+  height: 7em;
+  width: 7em;
+  background: var(--background-light);
+  padding: 1em;
+  font-size: 0.75em;
+  border-radius: 4px;
+  line-height: 2em;
+  text-align: center;
+}
+
+.upload-form__cover .input__input {
+  display: none;
 }
 
 .progress-primary {

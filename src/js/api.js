@@ -9,12 +9,19 @@ const client = axios.create({
   baseURL: "http://localhost:5000",
 });
 
+function addIndex(song, index) {
+  return {
+    ...song,
+    index,
+  }
+}
+
 export function useFetchSongs() {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
     client.get("/songs").then((response) => {
-      setSongs(response.data.songs);
+      setSongs(response.data.songs.map(addIndex));
     });
   }, []);
 
@@ -32,6 +39,10 @@ export function useWatchSong(songId, pollInterval = 500) {
 
     interval.current = setInterval(async () => {
       const response = await client.get("songs/" + songId);
+
+      if (response.data.status === 'done') {
+        cancel();
+      }
 
       setSong(response.data);
     }, pollInterval);

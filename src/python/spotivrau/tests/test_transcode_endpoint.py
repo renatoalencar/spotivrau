@@ -13,6 +13,7 @@ def test_transcode(client):
         '/transcode',
         data={
             'name': 'Lost European',
+            'artist': 'Images',
             'file': open(
                 os.path.join(dirname, 'fixtures/Images - Lost European.wav'),
                 'rb'
@@ -61,6 +62,7 @@ def test_transcode(client):
     assert song.status == SongStatus.QUEDED
     assert song.cover_path == cover_path
     assert song.cover_thumb_path == cover_thumb_path
+    assert song.artist == 'Images'
 
 
 def test_invalid_file(client):

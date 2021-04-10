@@ -7,18 +7,8 @@ import {
   createContext,
   useCallback,
 } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlay,
-  faPause,
-  faVolumeUp,
-  faVolumeDown,
-  faVolumeOff,
-  faVolumeMute,
-} from "@fortawesome/free-solid-svg-icons";
 
-import "./Player.css";
-import { formatTime } from "./time";
+import PlayerContainer from './PlayerContainer';
 
 function playerState(state, action) {
   switch (action.type) {
@@ -104,7 +94,7 @@ function debounce(fn, time) {
 function usePlayerImpl() {
   const audio = useRef(new Audio());
   const [song, setSong] = useState(null);
-  const [state, dispatch] = useReducer(playerState, {});
+  const [state, dispatch] = useReducer(playerState, { volume: 1.0 });
 
   const setCurrentTime = useCallback(
     debounce((time) => {
@@ -238,90 +228,56 @@ export function PlayerProvider({ children }) {
   );
 }
 
-function getVolumeIcon(volume, muted) {
-  if (muted) {
-    return faVolumeMute;
-  }
-
-  if (volume === 0) {
-    return faVolumeOff;
-  }
-
-  if (volume < 0.5) {
-    return faVolumeDown;
-  }
-
-  return faVolumeUp;
-}
-
-export function Player({}) {
+function usePlaylist(songs) {
   const player = usePlayer();
 
-  if (player.song === null) {
-    return null;
-  }
+  const currentPlayingSong = player.song
 
-  function handleSeek(e) {
-    player.seek(e.target.value);
-  }
+  return {
+    next() {
+      if (currentPlayingSong.index >= songs.length - 1) {
+        return
+      }
 
-  function handleVolume(e) {
-    player.setVolume(e.target.value);
-  }
+      togglePlayOrReplace(player, songs[currentPlayingSong.index + 1])
+    },
+    previous() {
+      if (currentPlayingSong.index <= 0) {
+        return
+      }
 
-  function handleMute() {
-    player.toggleMute();
+      togglePlayOrReplace(player, songs[currentPlayingSong.index - 1])
+    },
+    hasNext: currentPlayingSong && currentPlayingSong.index >= songs.length,
+    hasPrevious: currentPlayingSong && currentPlayingSong.index === 0,
   }
+}
+
+export function Player({ playlistSongs }) {
+  const player = usePlayer();
+  const playlist = usePlaylist(playlistSongs);
 
   return (
-    <div className="global-player">
-      <h2 className="global-player__song-title">{player.song.name}</h2>
-
-      <div className="global-player__controls">
-        <button
-          className="global-player__controls__play-pause-button"
-          onClick={() => togglePlay(player)}
-        >
-          <FontAwesomeIcon
-            icon={player.state.state === "playing" ? faPause : faPlay}
-          />
-        </button>
-        <div className="global-player__progress-container">
-          <span className="global-player__controls__time">
-            {formatTime(player.state.currentTime)}
-          </span>
-          <input
-            type="range"
-            className="global-player__progress-container__time-control"
-            value={player.state.currentTime}
-            max={player.state.duration}
-            onChange={handleSeek}
-          />
-          <span className="global-player__controls__time">
-            {formatTime(player.state.duration)}
-          </span>
-        </div>
-      </div>
-
-      <div className="global-player__volume-container">
-        <button
-          className="global-player__volume-button"
-          onClick={handleMute}
-          >
-          <FontAwesomeIcon
-            icon={getVolumeIcon(player.state.volume, player.state.muted)}
-          />
-        </button>
-
-        <input
-          type="range"
-          className="global-player__volume"
-          value={player.state.volume}
-          max={1}
-          step={0.01}
-          onChange={handleVolume}
-        />
-      </div>
-    </div>
+    <PlayerContainer
+      player={player}
+      onSeek={(e) => {
+        player.seek(e.target.value);
+      }}
+      onVolume={(e) => {
+        player.setVolume(e.target.value);
+      }}
+      onMute={() => {
+        player.toggleMute();
+      }}
+      onPrevious={() => {
+        playlist.previous();
+      }}
+      onNext={() => {
+        playlist.next();
+      }}
+      onPlay={() => {
+        togglePlay(player);
+      }}
+    />
   );
 }

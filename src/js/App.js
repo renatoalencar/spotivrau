@@ -34,7 +34,7 @@ function App() {
           </button>
         )}
 
-        <Player />
+        <Player playlistSongs={songs} />
       </div>
     </PlayerProvider>
   );

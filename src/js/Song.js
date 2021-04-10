@@ -12,7 +12,7 @@ import {formatTime} from './time'
 export function Song({ index, song }) {
   const player = usePlayer();
 
-  const isCurrentSong = player.song.id === song.id
+  const isCurrentSong = player.song && player.song.id === song.id
   const playing = player.state.state === "playing" && isCurrentSong
 
   const classes = ['player']
@@ -46,7 +46,10 @@ export function Song({ index, song }) {
       <img className="player__song-cover" src={'/media/' + song.cover} />
 
       <div className="player__info">
-        <h2 className="player__song-title">{song.name}</h2>
+        <div className="player__info__title-and-artist">
+          <h3 className="player__song-title">{song.name}</h3>
+          <p className="player__song-artist">{song.artist}</p>
+        </div>
 
         <span className="player__duration">
           {formatTime(song.duration)}

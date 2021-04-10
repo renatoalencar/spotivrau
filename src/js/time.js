@@ -16,5 +16,8 @@ export function formatTime(time) {
 
   parts.reverse();
 
-  return parts.map((p) => p.toString().padStart(2, "0")).join(":");
+  return [
+    parts[0],
+    ...parts.slice(1).map(p => p.toString().padStart(2, '0'))
+  ].join(':')
 }

@@ -15,7 +15,8 @@ from .thumb import Thumb
 def index():
     service = EnqueueTranscodeService(FileStorage(app), Song, Thumb, queue)
     song = service.transcode(
-        request.form['name'],
+        request.form.get('name'),
+        request.form.get('artist'),
         request.files.get('file', None),
         request.files.get('cover', None)
     )
@@ -27,6 +28,7 @@ def serialize_song(song):
     serialized_song = {
         'id': song.id,
         'name': song.name,
+        'artist': song.artist,
         'original_song': os.path.basename(song.original_song_path),
         'status': song.status.value
     }

@@ -9,7 +9,7 @@
 }
 
 .player:hover {
-  background: #FFFFFF20;
+  background: var(--background-1);
 }
 
 .player__waveform {
@@ -67,8 +67,15 @@
 }
 
 .player__song-title {
-  margin: 0.5em 0;
+  margin: 0;
   font-weight: 500;
+  line-height: 1.5em;
+}
+
+.player__song-artist {
+  margin: 0;
+  line-height: 1.5em;
+  opacity: 0.75;
 }
 
 .player--current-song {

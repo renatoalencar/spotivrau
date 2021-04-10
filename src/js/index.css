@@ -1,13 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
-body {
-  margin: 0;
-  font-family: 'Montserrat', 'Open Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  background: #000;
-  color: #fff;
+:root {
+  --font-family: 'Montserrat', 'Open Sans', sans-serif;
+  --font-size: 22px;
 
   --primary-color: #1DB954;
   --foreground-color: white;
@@ -15,7 +10,18 @@ body {
   --background-light: #575757;
   --background-lighter: #868686;
 
-  font-size: 22px;
+  --background-1: #151515;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: var(--background-color);
+  color: var(--foreground-color);
+  font-size: var(--font-size);
 }
 
 code {
