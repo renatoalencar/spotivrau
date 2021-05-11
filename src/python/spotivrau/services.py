@@ -69,3 +69,20 @@ class TranscodeService:
         self.song.status = SongStatus.DONE
 
         self.song.save()
+
+
+class ArtistService:
+    def __init__(self, artist_class, storage):
+        self.artist_class = artist_class
+        self.storage = storage
+
+    def create(self, name, picture):
+        id = str(uuid.uuid4())
+
+        picture_path = self.storage.upload(id + '.artist', picture)
+
+        return self.artist_class(
+            id=id,
+            name=name,
+            picture_path=picture_path,
+        ).save()

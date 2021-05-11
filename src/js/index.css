@@ -46,3 +46,24 @@ code {
 .primary-button:hover {
   transform: scaleX(1.025) scaleY(1.025);
 }
+
+.input {
+  margin-bottom: 1.5em;
+}
+
+.input__label {
+  font-weight: 600;
+  margin-bottom: 1em;
+  display: block;
+}
+
+.input__input {
+  background: var(--background-light);
+  border-radius: 4px;
+  border: 1px solid var(--background-lighter);
+  padding: 0.9em;
+  color: var(--foreground-color);
+  width: 100%;
+  font-size: 1em;
+  outline: none;
+}

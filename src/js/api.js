@@ -102,3 +102,17 @@ export function useCreateSong() {
     progress,
   };
 }
+
+
+export function useArtists() {
+  const [artists, setArtists] = useState([]);
+
+  useEffect(() => {
+    client.get('/artists')
+      .then(response => {
+        setArtists(response.data.artists);
+      })
+  }, [])
+
+  return artists
+}

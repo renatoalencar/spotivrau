@@ -1,4 +1,3 @@
-import json
 from spotivrau.models import Song, SongStatus
 
 
@@ -27,9 +26,7 @@ def test_single_song(client):
         }
     ).save()
 
-    response = client.get('/songs/6e499cbb-dc2d-4423-b2e7-1ff568409add')
-
-    data = json.loads(response.data)
+    data = client.get('/songs/6e499cbb-dc2d-4423-b2e7-1ff568409add').get_json()
 
     assert data['id'] == '6e499cbb-dc2d-4423-b2e7-1ff568409add'
     assert data['name'] == 'C\'est Cuit'
@@ -52,8 +49,6 @@ def test_songs(client):
         status=SongStatus.DONE
     ).save()
 
-    response = client.get('/songs')
-
-    data = json.loads(response.data)
+    data = client.get('/songs').get_json()
 
     assert len(data['songs']) > 0

@@ -1,12 +1,11 @@
-from spotivrau.transcoder import Transcoder
-import os
-import io
 import magic
 
-dirname = os.path.dirname(os.path.realpath(__file__))
+from spotivrau.transcoder import Transcoder
+from .utils import file_fixture
+
 
 def test_transcode():
-    f = open(os.path.join(dirname, 'fixtures/Images - Lost European.wav'), 'rb')
+    f = file_fixture('Images - Lost European.wav')
 
     transcoder = Transcoder(f)
     output = transcoder.transcode('ogg')
@@ -16,7 +15,7 @@ def test_transcode():
 
 
 def test_metadata():
-    f = open(os.path.join(dirname, 'fixtures/Images - Lost European.wav'), 'rb')
+    f = file_fixture('fixtures/Images - Lost European.wav')
 
     transcoder = Transcoder(f)
     output = transcoder.metadata()
@@ -25,7 +24,7 @@ def test_metadata():
 
 
 def test_metadata():
-    f = open(os.path.join(dirname, 'fixtures/Images - Lost European.wav'), 'rb')
+    f = file_fixture('Images - Lost European.wav')
 
     transcoder = Transcoder(f)
     output = transcoder.waveform()

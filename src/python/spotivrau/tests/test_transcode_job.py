@@ -1,19 +1,14 @@
-import os
-import io
 import magic
 
 from spotivrau.jobs import transcode
 from spotivrau.models import Song, SongStatus
-
-
-dirname = os.path.dirname(os.path.realpath(__file__))
-
+from .utils import file_fixture_path
 
 def test_transcode(current_app):
     song = Song(
         id='a11a5c4d-a01c-486c-ad5f-e37dca23e918',
         name='Lost European',
-        original_song_path=os.path.join(dirname, 'fixtures/Images - Lost European.wav')
+        original_song_path=file_fixture_path('Images - Lost European.wav')
     ).save()
 
     transcode(id=song.id)

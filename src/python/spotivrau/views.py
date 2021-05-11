@@ -5,8 +5,8 @@ from .lib.storage import FileStorage
 from .lib.service import service_error_serialize
 
 from .app import app, queue
-from .models import Song, SongStatus
-from .services import EnqueueTranscodeService
+from .models import Song, SongStatus, Artist
+from .services import EnqueueTranscodeService, ArtistService
 from .thumb import Thumb
 
 
@@ -62,3 +62,36 @@ def song(song_id):
     song = Song.objects.get(id=song_id)
 
     return serialize_song(song)
+
+
+def serialize_artist(artist):
+    artist_dict = {
+        'id': str(artist.id),
+        'name': artist.name,
+    }
+
+    if artist.picture_path is not None:
+        artist_dict['picture'] = os.path.basename(artist.picture_path)
+
+    return artist_dict
+
+
+@app.route('/artist', methods=['POST'])
+def create_artist():
+    service = ArtistService(Artist, FileStorage(app))
+
+    artist = service.create(
+        request.form.get('name'),
+        request.files.get('picture')
+    )
+
+    return serialize_artist(artist)
+
+
+@app.route('/artists')
+def list_artists():
+    artists = Artist.objects.all()
+
+    return {
+        'artists': list(map(serialize_artist, artists))
+    }

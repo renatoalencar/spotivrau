@@ -3,6 +3,12 @@ import enum
 import mongoengine as db
 
 
+class Artist(db.Document):
+    id = db.UUIDField(primary_key=True)
+    name = db.StringField()
+    picture_path = db.StringField()
+
+
 class SongStatus(enum.Enum):
     IDLE = 'idle'
     QUEDED = 'queued'

@@ -3,3 +3,26 @@
   margin: 2.5em auto;
   margin-bottom: 10em;
 }
+
+.header ul {
+  list-style: none;
+  padding-left: 0;
+
+  display: flex;
+}
+
+.header__link {
+  margin: 0.5em;
+}
+
+.header__link a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.header__link a:hover {
+  transition: all ease 0.5s;
+  transform: translateY(-10px);
+}

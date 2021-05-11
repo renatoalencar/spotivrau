@@ -1,55 +1,40 @@
-import os
-import json
-import io
-
 import magic
 
 from spotivrau.models import Song, SongStatus
+from .utils import file_fixture, uploaded_media_path
 
-dirname = os.path.dirname(os.path.realpath(__file__))
 
-def test_transcode(client):
-    response = client.post(
+def transcode_song(client, **data):
+    return client.post(
         '/transcode',
-        data={
-            'name': 'Lost European',
-            'artist': 'Images',
-            'file': open(
-                os.path.join(dirname, 'fixtures/Images - Lost European.wav'),
-                'rb'
-            ),
-            'cover': open(
-                os.path.join(dirname, 'fixtures/420.jpg'),
-                'rb'
-            )
-        },
+        data=data,
         content_type='multipart/form-data'
     )
 
-    data = json.loads(response.data)
+def test_transcode(client):
+    response = transcode_song(
+        client,
+        name='Lost European',
+        artist='Images',
+        file=file_fixture('Images - Lost European.wav'),
+        cover=file_fixture('420.jpg'),
+    )
+
+    data = response.get_json()
 
     id = data['id']
-    song_path = os.path.join(
-        client.application.config['UPLOAD_FOLDER'],
-        id + '.wav'
-    )
-    cover_path = os.path.join(
-        client.application.config['UPLOAD_FOLDER'],
-        id + '.cover.jpg',
-    )
-    cover_thumb_path = os.path.join(
-        client.application.config['UPLOAD_FOLDER'],
-        id + '.cover.thumb.png',
-    )
+    song_path = uploaded_media_path(client, id + '.wav')
+    cover_path = uploaded_media_path(client, id + '.cover.jpg')
+    cover_thumb_path = uploaded_media_path(client, id + '.cover.thumb.png')
+
     song = Song.objects.get(id=id)
 
     assert response.status_code == 200
 
     # Should have persisted the raw file
-    assert os.path.exists(song_path)
+    assert magic.from_file(song_path, mime=True) == 'audio/x-wav'
 
     # Should have generated thumbnail
-    assert os.path.exists(cover_thumb_path)
     assert magic.from_file(cover_thumb_path, mime=True) == 'image/png'
 
     # Should have enqueued a transcode message
@@ -66,19 +51,13 @@ def test_transcode(client):
 
 
 def test_invalid_file(client):
-    response = client.post(
-        '/transcode',
-        data={
-            'name': 'Lost European',
-            'file': open(
-                os.path.join(dirname, 'fixtures/Invalid file.txt'),
-                'rb'
-            )
-        },
-        content_type='multipart/form-data'
+    response = transcode_song(
+        client,
+        name='Lost European',
+        file=file_fixture('Invalid file.txt'),
     )
 
-    data = json.loads(response.data)
+    data = response.get_json()
     message = data['message']
 
     assert response.status_code == 400
